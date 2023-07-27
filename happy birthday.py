@@ -13,7 +13,8 @@ def get_birthdays_per_week(users):
     for user in users:
         birthday = user.get('birthday')
         if birthday:
-            birthday_date = birthday.date()
+            # Змінюємо рік дати народження на поточний
+            birthday_date = birthday.replace(year=today.year).date()
             if start_of_week <= birthday_date <= end_of_week:
                 if birthday_date.weekday() in [5, 6]:  # Якщо день народження вихідний, то переносимо на понеділок
                     weekends_birthdays.append(user)
