@@ -2,10 +2,10 @@ from datetime import datetime, timedelta
 
 def get_birthdays_per_week(users):
     today = datetime.now().date()
-    # Знаходимо перший день поточного тижня (понеділок)
-    start_of_week = today - timedelta(days=today.weekday())
+    # Знаходимо перший день наступного тижня (понеділок)
+    start_of_next_week = today + timedelta(days=(7 - today.weekday()))
     # Знаходимо останній день наступного тижня (неділя)
-    end_of_week = start_of_week + timedelta(days=13)
+    end_of_next_week = start_of_next_week + timedelta(days=6)
     
     birthdays_this_week = []
     weekends_birthdays = []
@@ -15,7 +15,7 @@ def get_birthdays_per_week(users):
         if birthday:
             # Змінюємо рік дати народження на поточний
             birthday_date = birthday.replace(year=today.year).date()
-            if start_of_week <= birthday_date <= end_of_week:
+            if start_of_next_week <= birthday_date <= end_of_next_week:
                 if birthday_date.weekday() in [5, 6]:  # Якщо день народження вихідний, то переносимо на понеділок
                     weekends_birthdays.append(user)
                 else:
@@ -34,7 +34,6 @@ def get_birthdays_per_week(users):
     if not birthdays_this_week and not weekends_birthdays:
         print("На наступному тижні немає днів народження.")
 
-# Приклад використання:
 users = [
     {'name': 'Ричард', 'birthday': datetime(1990, 7, 28)},
     {'name': 'Марія', 'birthday': datetime(1985, 7, 25)},
